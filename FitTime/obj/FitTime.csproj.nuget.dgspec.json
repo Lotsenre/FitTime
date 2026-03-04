@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ernesto\\Desktop\\Колясик\\FitTime\\FitTime.csproj": {}
+    "C:\\Users\\Ernesto\\Desktop\\FitTime\\FitTime\\FitTime.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ernesto\\Desktop\\Колясик\\FitTime\\FitTime.csproj": {
+    "C:\\Users\\Ernesto\\Desktop\\FitTime\\FitTime\\FitTime.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ernesto\\Desktop\\Колясик\\FitTime\\FitTime.csproj",
+        "projectUniqueName": "C:\\Users\\Ernesto\\Desktop\\FitTime\\FitTime\\FitTime.csproj",
         "projectName": "FitTime",
-        "projectPath": "C:\\Users\\Ernesto\\Desktop\\Колясик\\FitTime\\FitTime.csproj",
+        "projectPath": "C:\\Users\\Ernesto\\Desktop\\FitTime\\FitTime\\FitTime.csproj",
         "packagesPath": "C:\\Users\\Ernesto\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ernesto\\Desktop\\Колясик\\FitTime\\obj\\",
+        "outputPath": "C:\\Users\\Ernesto\\Desktop\\FitTime\\FitTime\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
