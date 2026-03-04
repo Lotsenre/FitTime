@@ -1,0 +1,77 @@
+<Window x:Class="FitTime.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="FitTime — Вход"
+        Height="700" Width="1280"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Background="#1A1A1A"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontFamily="Roboto">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left panel: branding -->
+        <Border Grid.Column="0" Background="#0D0D0D">
+            <StackPanel VerticalAlignment="Center" Margin="60,0">
+                <TextBlock Text="FITTIME"
+                           FontSize="56" FontWeight="Bold" Foreground="White"
+                           FontFamily="Roboto"/>
+                <Rectangle Height="4" Width="200" Fill="#F4B448"
+                           HorizontalAlignment="Left" Margin="0,16,0,16"/>
+                <TextBlock Text="ИНФОРМАЦИОННАЯ СИСТЕМА&#x0a;ДЛЯ ФИТНЕС-ЦЕНТРА"
+                           FontSize="14" Foreground="#808080"
+                           LineHeight="22"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Right panel: login form -->
+        <Border Grid.Column="1" Background="#1A1A1A">
+            <StackPanel VerticalAlignment="Center" Width="480" Margin="40">
+                <TextBlock Text="ВХОД В СИСТЕМУ"
+                           FontSize="20" FontWeight="Bold" Foreground="White"
+                           Margin="0,0,0,30"/>
+
+                <Separator Background="#333" Margin="0,0,0,30"/>
+
+                <TextBlock Text="ЛОГИН" FontSize="12" Foreground="#808080" Margin="0,0,0,8"/>
+                <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="16"
+                         materialDesign:HintAssist.Hint=""
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,20"/>
+
+                <TextBlock Text="ПАРОЛЬ" FontSize="12" Foreground="#808080" Margin="0,0,0,8"/>
+                <PasswordBox x:Name="PasswordBox"
+                             FontSize="16"
+                             materialDesign:HintAssist.Hint=""
+                             Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                             Margin="0,0,0,10"/>
+
+                <!-- Error message -->
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="#F44336" FontSize="13"
+                           Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}, ConverterParameter=.}"
+                           Margin="0,0,0,10"/>
+
+                <Button Content="ВОЙТИ"
+                        Command="{Binding LoginCommand}"
+                        IsEnabled="{Binding IsLoginEnabled}"
+                        Height="50" FontSize="16" FontWeight="Bold"
+                        Background="#F4B448" Foreground="Black"
+                        Margin="0,10,0,20"
+                        Click="LoginButton_Click"/>
+
+            </StackPanel>
+        </Border>
+
+        <!-- Footer -->
+        <TextBlock Grid.Column="0" Text="© 2026 FitTime"
+                   FontSize="12" Foreground="#555"
+                   VerticalAlignment="Bottom" Margin="20,0,0,20"/>
+    </Grid>
+</Window>

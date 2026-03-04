@@ -1,0 +1,63 @@
+<Window x:Class="FitTime.Views.UserDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ" Width="460" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="#1A1A1A"
+        TextElement.Foreground="White"
+        TextElement.FontFamily="Roboto">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ" FontSize="16" FontWeight="Bold"
+                   Foreground="#F4B448" Margin="0,0,0,20"/>
+
+        <!-- Login -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,14">
+            <TextBlock Text="ЛОГИН" Foreground="#666" FontSize="11" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" FontSize="14"/>
+        </StackPanel>
+
+        <!-- Full Name -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,14">
+            <TextBlock Text="ФИО (ФАМИЛИЯ ИМЯ ОТЧЕСТВО)" Foreground="#666" FontSize="11" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" FontSize="14"/>
+        </StackPanel>
+
+        <!-- Role -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,14">
+            <TextBlock Text="РОЛЬ" Foreground="#666" FontSize="11" Margin="0,0,0,6"/>
+            <ComboBox ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole}"
+                      DisplayMemberPath="Name"
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="14"/>
+        </StackPanel>
+
+        <!-- Password -->
+        <StackPanel Grid.Row="4" Margin="0,0,0,24">
+            <TextBlock Text="ПАРОЛЬ" Foreground="#666" FontSize="11" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" FontSize="14"/>
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="ОТМЕНА" Click="Cancel_Click"
+                    Style="{StaticResource MaterialDesignFlatButton}" Foreground="#666" FontSize="12" Margin="0,0,8,0"/>
+            <Button Content="СОЗДАТЬ" Command="{Binding SaveCommand}"
+                    Background="#F4B448" Foreground="Black" FontWeight="Bold" FontSize="12"
+                    Height="36" Padding="24,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
