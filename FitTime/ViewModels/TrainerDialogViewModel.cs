@@ -24,6 +24,8 @@ public partial class TrainerDialogViewModel : ObservableObject
     [ObservableProperty] private bool _dialogResult;
     [ObservableProperty] private bool _isAccountVisible = true;
 
+    private int? _pendingAccountId;
+
     public TrainerDialogViewModel(FitTimeDbContext db)
     {
         _db = db;
@@ -38,6 +40,12 @@ public partial class TrainerDialogViewModel : ObservableObject
             .OrderBy(u => u.LastName)
             .ToListAsync();
         TrainerAccounts = new ObservableCollection<User>(trainers);
+
+        if (_pendingAccountId.HasValue)
+        {
+            SelectedAccount = TrainerAccounts.FirstOrDefault(a => a.Id == _pendingAccountId.Value);
+            _pendingAccountId = null;
+        }
     }
 
     public void LoadExisting(User trainer)
@@ -50,8 +58,14 @@ public partial class TrainerDialogViewModel : ObservableObject
         Phone = trainer.Phone;
         Email = trainer.Email;
         Specialization = trainer.Specialization;
-        SelectedAccount = trainer;
         IsAccountVisible = trainer.Role?.Name != "Manager";
+
+        // Если аккаунты уже загружены — ищем по Id, иначе запоминаем Id для отложенной установки
+        var match = TrainerAccounts.FirstOrDefault(a => a.Id == trainer.Id);
+        if (match != null)
+            SelectedAccount = match;
+        else
+            _pendingAccountId = trainer.Id;
     }
 
     [RelayCommand]
@@ -76,6 +90,29 @@ public partial class TrainerDialogViewModel : ObservableObject
             SelectedAccount.Phone = Phone;
             SelectedAccount.Email = Email;
             SelectedAccount.Specialization = Specialization;
+        }
+        else
+        {
+            // Создаём нового тренера без привязки к аккаунту
+            var trainerRole = await _db.Roles.FirstOrDefaultAsync(r => r.Name == "Trainer");
+            if (trainerRole == null) return;
+
+            var login = $"trainer_{LastName.ToLower()}_{DateTime.Now:yyyyMMddHHmmss}";
+            var newTrainer = new User
+            {
+                Login = login,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("trainer123"),
+                RoleId = trainerRole.Id,
+                FirstName = FirstName,
+                LastName = LastName,
+                Patronymic = Patronymic,
+                Phone = Phone,
+                Email = Email,
+                Specialization = Specialization,
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow
+            };
+            _db.Users.Add(newTrainer);
         }
 
         await _db.SaveChangesAsync();

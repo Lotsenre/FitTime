@@ -45,10 +45,6 @@ public partial class ReportsViewModel : BaseViewModel
     [ObservableProperty] private decimal _avgPrice;
     [ObservableProperty] private ObservableCollection<SalesSummaryItem> _salesByType = new();
 
-    // Expiring memberships
-    [ObservableProperty] private ObservableCollection<ExpiringMembershipItem> _expiringMemberships = new();
-    [ObservableProperty] private int _expiringCount;
-
     private Task _initialLoadTask = null!;
 
     public ReportsViewModel(FitTimeDbContext db)
@@ -66,14 +62,10 @@ public partial class ReportsViewModel : BaseViewModel
             switch (SelectedTab)
             {
                 case "Посещаемость":
-                case "Загруженность":
                     await LoadAttendanceReportAsync();
                     break;
                 case "Продажи":
                     await LoadSalesReportAsync();
-                    break;
-                case "Истекают":
-                    await LoadExpiringReportAsync();
                     break;
             }
         }
@@ -177,39 +169,6 @@ public partial class ReportsViewModel : BaseViewModel
         SalesByType = new ObservableCollection<SalesSummaryItem>(byType);
     }
 
-    private async Task LoadExpiringReportAsync()
-    {
-        var today = DateOnly.FromDateTime(DateTime.Today);
-        var in7Days = today.AddDays(7);
-
-        var expiring = await _db.Memberships
-            .AsNoTracking()
-            .Include(m => m.Client)
-            .Include(m => m.MembershipType)
-            .Where(m => m.IsActive && m.EndDate >= today && m.EndDate <= in7Days)
-            .OrderBy(m => m.EndDate)
-            .ToListAsync();
-
-        ExpiringCount = expiring.Count;
-
-        var items = expiring.Select(m =>
-        {
-            var daysLeft = m.EndDate.DayNumber - today.DayNumber;
-            return new ExpiringMembershipItem
-            {
-                ClientName = m.Client.FullName,
-                TypeName = m.MembershipType.Name,
-                EndDate = m.EndDate.ToString("dd.MM.yyyy"),
-                DaysLeft = daysLeft,
-                DaysLeftColor = daysLeft <= 3
-                    ? new SolidColorBrush(Color.FromRgb(0xC0, 0x40, 0x40))
-                    : new SolidColorBrush(Color.FromRgb(0xF4, 0xB4, 0x48))
-            };
-        }).ToList();
-
-        ExpiringMemberships = new ObservableCollection<ExpiringMembershipItem>(items);
-    }
-
     private static SolidColorBrush GetClassColor(string hexColor)
     {
         try
@@ -256,7 +215,6 @@ public partial class ReportsViewModel : BaseViewModel
         switch (SelectedTab)
         {
             case "Посещаемость":
-            case "Загруженность":
                 csv.WriteField("Занятие");
                 csv.WriteField("Тренер");
                 csv.WriteField("Посещений");
@@ -288,21 +246,6 @@ public partial class ReportsViewModel : BaseViewModel
                 }
                 break;
 
-            case "Истекают":
-                csv.WriteField("Клиент");
-                csv.WriteField("Абонемент");
-                csv.WriteField("Дата окончания");
-                csv.WriteField("Дней осталось");
-                csv.NextRecord();
-                foreach (var item in ExpiringMemberships)
-                {
-                    csv.WriteField(item.ClientName);
-                    csv.WriteField(item.TypeName);
-                    csv.WriteField(item.EndDate);
-                    csv.WriteField(item.DaysLeft);
-                    csv.NextRecord();
-                }
-                break;
         }
     }
 
@@ -325,11 +268,3 @@ public class SalesSummaryItem
     public decimal Revenue { get; set; }
 }
 
-public class ExpiringMembershipItem
-{
-    public string ClientName { get; set; } = string.Empty;
-    public string TypeName { get; set; } = string.Empty;
-    public string EndDate { get; set; } = string.Empty;
-    public int DaysLeft { get; set; }
-    public Brush DaysLeftColor { get; set; } = Brushes.White;
-}

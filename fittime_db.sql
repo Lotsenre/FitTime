@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Начальный администратор (пароль задаётся при первом запуске)
 INSERT INTO users (login, password_hash, role_id, first_name, last_name)
-VALUES ('admin', '$2a$11$f36RHEQhrctVG6tWF98sz.DooqOMblLg0EsZ3uH/pePFCKw7LhGeS', 1, 'Администратор', 'Системный')
+VALUES ('admin', '$2a$11$Fhw8nICUDpjSJJW0SF1TSegpnJ6PAh.rk5Ow7U1h6Mv3V3AAHFj56', 1, 'Администратор', 'Системный')
 ON CONFLICT (login) DO NOTHING;
 
 -- ------------------------------------------------------------
@@ -194,21 +194,21 @@ CREATE INDEX IF NOT EXISTS idx_attendance_date   ON attendance(checked_in_at);
 
 -- Дополнительные пользователи (тренеры и менеджеры)
 INSERT INTO users (login, password_hash, role_id, first_name, last_name, patronymic, phone, email, specialization) VALUES
-    ('manager1',  '$2a$11$H7CnlkOSRe81Hn070NVtLOu/wu4WaqFW1g/qy7wsQa1y5T10w8VRu', 2, 'Ольга',    'Смирнова',   'Викторовна',  '+79101234501', 'smirnova@fittime.ru',   NULL),
-    ('manager2',  '$2a$11$1GoMA3LyXtIR1cuQ/21xLeNTvIr3ABLqFIqE./O12zul8BRcZyosi', 2, 'Дмитрий',  'Козлов',     'Андреевич',   '+79101234502', 'kozlov@fittime.ru',     NULL),
-    ('trainer1',  '$2a$11$zh/cUYKy4Dbp0Lk0UeTQxuh/kxdW7cL6VAGf7PcplM5UBez2t73MG', 3, 'Алексей',  'Волков',     'Сергеевич',   '+79101234503', 'volkov@fittime.ru',     'Йога, Стретчинг'),
-    ('trainer2',  '$2a$11$RmkB0T1WNPkBXmREg6uZxeP27LF8dJqWuSa6nh8OXOcdAttIY4y4m', 3, 'Мария',    'Новикова',   'Александровна','+79101234504', 'novikova@fittime.ru',  'Пилатес, Зумба'),
-    ('trainer3',  '$2a$11$wQ10hCnV8.ROFAKrAHrePefnQmRUTMBK1k5SIWhO5m/bmNfKGUc56', 3, 'Иван',     'Соколов',    'Дмитриевич',  '+79101234505', 'sokolov@fittime.ru',    'Кроссфит'),
-    ('trainer4',  '$2a$11$niRueH32NwBItoHAj69Dz.p1jtLWDjlHR18CvYP74opxKQ.cuvvZO', 3, 'Екатерина','Морозова',   'Игоревна',    '+79101234506', 'morozova@fittime.ru',   'Аквааэробика'),
-    ('trainer5',  '$2a$11$VK5o0sf0RPXYomlFg.jamOnGHYc.6AWpTQW83A3pDXAzRp/EPiYyC', 3, 'Андрей',   'Лебедев',    'Павлович',    '+79101234507', 'lebedev@fittime.ru',    'Кроссфит, Стретчинг'),
-    ('trainer6',  '$2a$11$OE5B9B4io3DxQM69wP9G0uGMsbRW4Dl5VdT5EtaYqesGz8mYChtR2', 3, 'Наталья',  'Кузнецова',  'Олеговна',    '+79101234508', 'kuznetsova@fittime.ru', 'Йога, Пилатес'),
-    ('trainer7',  '$2a$11$eCsadaZef5KSYTPWpBCyb.uMPMfdc7UTUv7i/7B1Od64pj12snFJ.', 3, 'Сергей',   'Попов',      'Валерьевич',  '+79101234509', 'popov@fittime.ru',      'Зумба'),
-    ('trainer8',  '$2a$11$c4lHUck17a3LeAICQ1pKFOUaO8tti6kTmzfUmrh.O92GPrBDCIG1a', 3, 'Анна',     'Федорова',   'Михайловна',  '+79101234510', 'fedorova@fittime.ru',   'Стретчинг, Пилатес'),
-    ('manager3',  '$2a$11$j1pZy/yTN4so2v2TwNtRZOIjHLrUxN0/HVoBKVBWX7emBAO4TB6y6', 2, 'Виктор',   'Егоров',     'Николаевич',  '+79101234511', 'egorov@fittime.ru',     NULL),
-    ('trainer9',  '$2a$11$VcAtL7QiL5XjyHiIaOkyouA1GNkzuxXHOJcj/Bt8Hb2lRDyDtqaV2', 3, 'Елена',    'Павлова',    'Артёмовна',   '+79101234512', 'pavlova@fittime.ru',    'Йога'),
-    ('trainer10', '$2a$11$q/yHYYHSop1PIEu6HStVhuU23IJcn3c7hAmcAEKI3O1Tcf77To7.O', 3, 'Максим',   'Семёнов',    'Русланович',  '+79101234513', 'semenov@fittime.ru',    'Кроссфит, Зумба'),
-    ('manager4',  '$2a$11$WMoeM6mqw7R1Go4GPya5zOJ30joJ0YobHVOFegMCUtt.DYBjXJBxS', 2, 'Татьяна',  'Белова',     'Сергеевна',   '+79101234514', 'belova@fittime.ru',     NULL),
-    ('trainer11', '$2a$11$qe2DJmAJSWT9VrYbCs/OKOM.Rnj5YKJToMT9IEISGjD/FW7d1GvES', 3, 'Роман',    'Комаров',    'Евгеньевич',  '+79101234515', 'komarov@fittime.ru',    'Аквааэробика, Стретчинг')
+    ('manager1',  '$2a$11$grj.S3gnR0Yl8U9bYRRgwOM83L0FY3VXRXrNbb1q7NwcLELNE.u7u', 2, 'Ольга',    'Смирнова',   'Викторовна',  '+79101234501', 'smirnova@fittime.ru',   NULL),
+    ('manager2',  '$2a$11$DPZQHvb5EKXBdBLOC8TDBOWz7II.e5XvcroM29O5LYBhjYMFExQh.', 2, 'Дмитрий',  'Козлов',     'Андреевич',   '+79101234502', 'kozlov@fittime.ru',     NULL),
+    ('trainer1',  '$2a$11$wIqYlB.Zwx3npHfpsVZdUeSapHXcADqkQ7haCBdaSovg0bt/Zb8xi', 3, 'Алексей',  'Волков',     'Сергеевич',   '+79101234503', 'volkov@fittime.ru',     'Йога, Стретчинг'),
+    ('trainer2',  '$2a$11$jw.qLGYnuJFBDCZHeLNeROOoCulk0HcExXYb6xG7L1D8g5GhXJ12S', 3, 'Мария',    'Новикова',   'Александровна','+79101234504', 'novikova@fittime.ru',  'Пилатес, Зумба'),
+    ('trainer3',  '$2a$11$AJnAhHzAqJe/XEMKFDELJeqWHy3iyPpj5/iqBQLoigbqqPdpi1kgG', 3, 'Иван',     'Соколов',    'Дмитриевич',  '+79101234505', 'sokolov@fittime.ru',    'Кроссфит'),
+    ('trainer4',  '$2a$11$Iv0QfayN0NN/I14BQRneJudtIFvZnM7HA7LWMvZEKCL6XwOuXeVy.', 3, 'Екатерина','Морозова',   'Игоревна',    '+79101234506', 'morozova@fittime.ru',   'Аквааэробика'),
+    ('trainer5',  '$2a$11$ItRDAnEpFxALDfjyjm3i4ekSvkqTw.8w0csHvu2g4/XoXYxLKO4Ka', 3, 'Андрей',   'Лебедев',    'Павлович',    '+79101234507', 'lebedev@fittime.ru',    'Кроссфит, Стретчинг'),
+    ('trainer6',  '$2a$11$RRZJ8NnrAS8SnR3YyDw6ceynHJjBmbTsvGlhAgvwA.KOEZ1lYVShe', 3, 'Наталья',  'Кузнецова',  'Олеговна',    '+79101234508', 'kuznetsova@fittime.ru', 'Йога, Пилатес'),
+    ('trainer7',  '$2a$11$6y6LM8rvowGhXQY3ViWwNu2x1kY8tyQqs6ujF8CFy1nHsCar0mnVa', 3, 'Сергей',   'Попов',      'Валерьевич',  '+79101234509', 'popov@fittime.ru',      'Зумба'),
+    ('trainer8',  '$2a$11$Wgy3MMwmxfPKjLhgArVE1.ZJffmtUt6cU/rl6Y9ntZbiGn9oCL2Fm', 3, 'Анна',     'Федорова',   'Михайловна',  '+79101234510', 'fedorova@fittime.ru',   'Стретчинг, Пилатес'),
+    ('manager3',  '$2a$11$a3zZOEnk6Vj4cFaTeTFhkOyNQotV9TwaC3FU6JC.jX56VE/yWSgN2', 2, 'Виктор',   'Егоров',     'Николаевич',  '+79101234511', 'egorov@fittime.ru',     NULL),
+    ('trainer9',  '$2a$11$CUdtmibgeTRTJSqjsKA4yucCWcD2Z8AvqrWSVCuffOB/.H1glSNrO', 3, 'Елена',    'Павлова',    'Артёмовна',   '+79101234512', 'pavlova@fittime.ru',    'Йога'),
+    ('trainer10', '$2a$11$63tlkGuUJ0aiG7t1frnHT.uCA0SzUxyrAoF14PZ2Fr3JJeCGWRMV.', 3, 'Максим',   'Семёнов',    'Русланович',  '+79101234513', 'semenov@fittime.ru',    'Кроссфит, Зумба'),
+    ('manager4',  '$2a$11$dGAyw4l.mYtVBDRMnXzzs.ub5U8XlbZMRiZ9TXULql9Nh6vLtbS5a', 2, 'Татьяна',  'Белова',     'Сергеевна',   '+79101234514', 'belova@fittime.ru',     NULL),
+    ('trainer11', '$2a$11$yKEhlUvXHAJGT8C/Cz6BP.1JWtfevo6KO8NaVwsu2LFRKS1vx7vAq', 3, 'Роман',    'Комаров',    'Евгеньевич',  '+79101234515', 'komarov@fittime.ru',    'Аквааэробика, Стретчинг')
 ON CONFLICT (login) DO NOTHING;
 
 -- Клиенты

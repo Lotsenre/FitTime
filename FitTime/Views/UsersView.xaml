@@ -107,6 +107,9 @@
                     IsEnabled="{Binding CanEditSelectedUser}"/>
             <Button Content="ЗАБЛОКИРОВАТЬ" Command="{Binding BlockUserCommand}"
                     Style="{StaticResource MaterialDesignFlatButton}" Foreground="#C0392B" FontSize="12"
+                    IsEnabled="{Binding CanEditSelectedUser}" Margin="0,0,8,0"/>
+            <Button Content="УДАЛИТЬ" Command="{Binding DeleteUserCommand}"
+                    Style="{StaticResource MaterialDesignFlatButton}" Foreground="#C04040" FontSize="12"
                     IsEnabled="{Binding CanEditSelectedUser}"/>
         </StackPanel>
     </Grid>

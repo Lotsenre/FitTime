@@ -90,6 +90,24 @@ public partial class TrainersViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task DeleteTrainerAsync()
+    {
+        if (SelectedTrainer == null) return;
+
+        var result = System.Windows.MessageBox.Show(
+            $"Удалить тренера {SelectedTrainer.FullName}?",
+            "Подтверждение",
+            System.Windows.MessageBoxButton.YesNo,
+            System.Windows.MessageBoxImage.Question);
+
+        if (result != System.Windows.MessageBoxResult.Yes) return;
+
+        SelectedTrainer.Source.IsActive = false;
+        await _db.SaveChangesAsync();
+        await LoadAsync();
+    }
+
+    [RelayCommand]
     private void ViewSchedule()
     {
         _nav.NavigateTo<ScheduleViewModel>();

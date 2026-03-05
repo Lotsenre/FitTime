@@ -145,4 +145,34 @@ public partial class UsersViewModel : BaseViewModel
         await _db.SaveChangesAsync();
         await LoadAsync();
     }
+
+    [RelayCommand]
+    private async Task DeleteUserAsync()
+    {
+        if (SelectedUser == null) return;
+
+        var result = System.Windows.MessageBox.Show(
+            $"Удалить аккаунт «{SelectedUser.Login}» ({SelectedUser.FullName})?\nЭто действие необратимо.",
+            "Подтверждение удаления",
+            System.Windows.MessageBoxButton.YesNo,
+            System.Windows.MessageBoxImage.Warning);
+
+        if (result != System.Windows.MessageBoxResult.Yes) return;
+
+        try
+        {
+            _db.Users.Remove(SelectedUser.Source);
+            await _db.SaveChangesAsync();
+            await LoadAsync();
+        }
+        catch (DbUpdateException)
+        {
+            System.Windows.MessageBox.Show(
+                "Невозможно удалить аккаунт — с ним связаны данные (занятия, посещения и т.д.).\nВместо удаления вы можете заблокировать аккаунт.",
+                "Ошибка удаления",
+                System.Windows.MessageBoxButton.OK,
+                System.Windows.MessageBoxImage.Error);
+            await _db.Entry(SelectedUser.Source).ReloadAsync();
+        }
+    }
 }
